@@ -21,8 +21,8 @@ int main()
 	for (int k = 0; k < 100; k++) {
 	smooth();}
 	saveImage("kot3.pgm");
-	auto koniec = omp_get_wtime();
-	printf(" Zajelo %f sekund.\n", koniec - start);
+	auto end = omp_get_wtime();
+	printf(" Zajelo %f sekund.\n", end - start);
 	return 0;
 }
 
@@ -62,11 +62,11 @@ void smooth()
 #pragma omp for
 		for (int i = 1; i < height; i++) {
 			for (int j = 1; j < width; j++) {
-				/// dla wag 1 i srodek 1
+			
 				float wartoscNowa3x3 = p[i - 1][j - 1] + p[i - 1][j] +
 					p[i - 1][j + 1] + p[i][j - 1] + p[i][j] + p[i][j + 1] +
 					p[i + 1][j - 1] + p[i + 1][j] + p[i + 1][j];
-				//dla wag 1 i srodek 2;
+				
 				float wartoscNowa3x3_waga3 = p[i - 1][j - 1] + p[i - 1][j] +
 					p[i - 1][j + 1] + p[i][j - 1] + 3 * p[i][j] + p[i][j + 1] +
 					p[i + 1][j - 1] + p[i + 1][j] + p[i + 1][j];
@@ -83,8 +83,6 @@ void saveImage(char filename[])
 	{
 		FILE *f;
 		f = fopen(filename, "w");
-
-		// dane naglowkowe (jak przy otwarciu)
 		fprintf(f, "P2\n");
 		fprintf(f, "%d %d\n", width, height);
 		fprintf(f, "%d\n", magic);
